@@ -8,6 +8,9 @@ const routes = Router();
 routes.post('/signup', createUser);
 routes.post('/signin', login);
 
+routes.delete('/signout', (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Выход' });
+});
 routes.use('/users', usersRouter);
 routes.use('/movies', moviesRouter);
 
