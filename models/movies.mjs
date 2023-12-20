@@ -1,5 +1,5 @@
 import { Schema, model, ObjectId } from 'mongoose';
-import isURL from 'validator/lib/isURL';
+import validator from 'validator';
 
 const movieSchema = new Schema({
   country: {
@@ -26,7 +26,7 @@ const movieSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => isURL(url),
+      validator: validator.isURL,
       message: (props) => `${props.value} неверный формат ссылки`,
     },
   },
@@ -34,7 +34,7 @@ const movieSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => isURL(url),
+      validator: validator.isURL,
       message: (props) => `${props.value} неверный формат ссылки`,
     },
   },
@@ -42,7 +42,7 @@ const movieSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => isURL(url),
+      validator: validator.isURL,
       message: (props) => `${props.value} неверный формат ссылки`,
     },
   },
