@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middlewares/errorHandler.mjs';
+import { requestLogger, errorLogger } from './middlewares/logger.mjs';
 import { corsConfig, limitter } from './config.mjs';
 import routes from './routes/index.mjs';
 
@@ -19,8 +20,10 @@ app.use(express.json());
 app.use(helmet());
 app.use(limitter);
 app.use(cookieParser());
+app.use(requestLogger);
 
 app.use(routes);
 
+app.use(errorLogger);
 app.use(errorHandler);
 app.listen(PORT);
