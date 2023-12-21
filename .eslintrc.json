@@ -9,6 +9,7 @@
     "ecmaVersion": "latest"
   },
   "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "consistent-return": "off",
     "operator-linebreak": ["error", "after"],
     "import/extensions": ["error", "ignorePackages"]

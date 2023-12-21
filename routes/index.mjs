@@ -3,6 +3,7 @@ import { createUser, login } from '../controllers/users.mjs';
 import auth from '../middlewares/auth.mjs';
 import usersRouter from './users.mjs';
 import moviesRouter from './movies.mjs';
+import NotFoundError from '../errors/NotFoundError.mjs';
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.delete('/signout', (req, res) => {
 });
 routes.use('/users', usersRouter);
 routes.use('/movies', moviesRouter);
+routes.use('/*', (req, res, next) => next(new NotFoundError('Мы не обрабатываем данный роут')));
 
 export default routes;
