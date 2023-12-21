@@ -54,10 +54,8 @@ export const createUser = async (req, res, next) => {
       return next(new DuplicateError('Такой пользователь уже существует'));
     }
 
-    if (error.name === 'ValidationError') {
-      return next(
-        new BadRequestError('Переданы невалидные данные для регистрации'),
-      );
+    if (error instanceof mongoose.Error.ValidationError) {
+      return next(new BadRequestError(error.message));
     }
 
     return next(error);

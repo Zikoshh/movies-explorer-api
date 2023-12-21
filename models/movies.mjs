@@ -1,4 +1,4 @@
-import { Schema, model, ObjectId } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import validator from 'validator';
 
 const movieSchema = new Schema(
@@ -31,7 +31,7 @@ const movieSchema = new Schema(
         message: (props) => `${props.value} неверный формат ссылки`,
       },
     },
-    trailerLink: {
+    trailer: {
       type: String,
       required: true,
       validate: {
@@ -47,13 +47,10 @@ const movieSchema = new Schema(
         message: (props) => `${props.value} неверный формат ссылки`,
       },
     },
-    owner: [
-      {
-        type: ObjectId,
-        ref: 'user',
-        default: [],
-      },
-    ],
+    owner: {
+      type: String,
+      required: true,
+    },
     movieId: {
       type: Number,
       required: true,
