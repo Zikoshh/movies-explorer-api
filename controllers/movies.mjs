@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import Movie from '../models/movies.mjs';
 import NotFoundError from '../errors/NotFoundError.mjs';
 import BadRequestError from '../errors/BadRequestError.mjs';
-import InsufficientPermissionsError from '../errors/InsufficientPermissionsError.mjs';
 
 export const getMovies = async (req, res, next) => {
   try {
@@ -18,22 +17,37 @@ export const getMovies = async (req, res, next) => {
 
 export const createMovie = async (req, res, next) => {
   try {
-    const newMovie = await Movie.create({
-      country: req.body.country,
-      director: req.body.director,
-      duration: req.body.duration,
-      year: req.body.year,
-      description: req.body.description,
-      image: req.body.image,
-      trailer: req.body.trailer,
-      thumbnail: req.body.thumbnail,
-      owner: req.user._id,
-      movieId: req.body.movieId,
-      nameRU: req.body.nameRU,
-      nameEN: req.body.nameEN,
-    });
+    const dbHasMovie = await Movie.findOne({ movieId: req.body.movieId });
 
-    return res.send(newMovie);
+    if (dbHasMovie) {
+      const updatedMovie = await Movie.findOneAndUpdate(
+        { movieId: req.body.movieId },
+        { $addToSet: { owner: req.user._id } },
+        {
+          new: true,
+          runValidators: true,
+          select:
+            'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+        },
+      );
+
+      return res.send(updatedMovie);
+    }
+
+    const newMovie = await Movie.create(req.body);
+
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      newMovie._id,
+      { $addToSet: { owner: req.user._id } },
+      {
+        new: true,
+        runValidators: true,
+        select:
+          'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+      },
+    );
+
+    return res.send(updatedMovie);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return next(new BadRequestError(error.message));
@@ -45,28 +59,21 @@ export const createMovie = async (req, res, next) => {
 
 export const deleteSavedMovie = async (req, res, next) => {
   try {
-    const movie = await Movie.findOne({
-      movieId: req.params.movieId,
-      owner: req.user._id,
-    }).orFail(() => next(new NotFoundError('Фильм с переданным id не найден')));
+    const updatedMovie = await Movie.findOneAndUpdate(
+      { movieId: req.params.movieId },
+      { $pull: { owner: req.user._id } },
+      {
+        new: true,
+        runValidators: true,
+        select:
+          'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+      },
+    ).orFail(() => next(new NotFoundError('Фильма с таким id не существует')));
 
-    if (movie.owner !== req.user._id) {
-      return next(
-        new InsufficientPermissionsError(
-          'Недостаточно прав для удаления',
-        ),
-      );
-    }
-
-    await Movie.findOneAndDelete({
-      movieId: req.params.movieId,
-      owner: req.user._id,
-    });
-
-    return res.send({ message: 'Фильм удален' });
+    return res.send(updatedMovie);
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
-      return next(new BadRequestError('Передано невалидное id фильма'));
+      return next(new BadRequestError('Невалидное id фильма'));
     }
     return next(error);
   }
