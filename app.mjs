@@ -4,11 +4,13 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
+import dotenv from 'dotenv';
 import errorHandler from './middlewares/errorHandler.mjs';
 import { requestLogger, errorLogger } from './middlewares/logger.mjs';
 import { corsConfig, limitter } from './config.mjs';
 import routes from './routes/index.mjs';
 
+dotenv.config();
 const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } =
   process.env;
 
