@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import { errors } from 'celebrate';
 import errorHandler from './middlewares/errorHandler.mjs';
 import { requestLogger, errorLogger } from './middlewares/logger.mjs';
 import { corsConfig, limitter } from './config.mjs';
@@ -25,5 +26,6 @@ app.use(requestLogger);
 app.use(routes);
 
 app.use(errorLogger);
+app.use(errors());
 app.use(errorHandler);
 app.listen(PORT);

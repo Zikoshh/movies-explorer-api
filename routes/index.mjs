@@ -4,11 +4,13 @@ import auth from '../middlewares/auth.mjs';
 import usersRouter from './users.mjs';
 import moviesRouter from './movies.mjs';
 import NotFoundError from '../errors/NotFoundError.mjs';
+import { validationConfig } from '../config.mjs';
 
+const { createUserValidation, loginValidation } = validationConfig;
 const routes = Router();
 
-routes.post('/signup', createUser);
-routes.post('/signin', login);
+routes.post('/signup', createUserValidation, createUser);
+routes.post('/signin', loginValidation, login);
 
 routes.use(auth);
 
