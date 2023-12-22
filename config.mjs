@@ -10,4 +10,15 @@ export const limitter = rateLimit({
   max: 300,
 });
 
+export const HTTP_CODES = {
+  CREATED_SUCCES: 201,
+  BAD_REQUEST_ERROR: 400,
+  DUPLICATE_ERROR: 409,
+  NOT_FOUND_ERROR: 404,
+  UNAUTHORIZED_ERROR: 401,
+  INTERNAL_SERVER_ERROR: 500,
+};
+
+export const MONGODB_DUPLICATE_ERROR = 11000;
+
 export const validationConfig = {};

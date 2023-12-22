@@ -1,7 +1,11 @@
+import { HTTP_CODES } from '../config.mjs';
+
+const { INTERNAL_SERVER_ERROR } = HTTP_CODES;
+
 const errorHandler = (err, req, res, next) => {
-  const { statusCode = 500, message } = err;
+  const { statusCode = INTERNAL_SERVER_ERROR, message } = err;
   res.status(statusCode).send({
-    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+    message: statusCode === INTERNAL_SERVER_ERROR ? 'На сервере произошла ошибка' : message,
   });
   next();
 };
