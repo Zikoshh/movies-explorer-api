@@ -6,7 +6,7 @@ import BadRequestError from '../errors/BadRequestError.mjs';
 export const getMovies = async (req, res, next) => {
   try {
     const movies = await Movie.find(
-      { owner: req.user._id },
+      { inFavorites: req.user._id },
       'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
     );
     return res.send(movies);
@@ -22,7 +22,7 @@ export const createMovie = async (req, res, next) => {
     if (dbHasMovie) {
       const updatedMovie = await Movie.findOneAndUpdate(
         { movieId: req.body.movieId },
-        { $addToSet: { owner: req.user._id } },
+        { $addToSet: { inFavorites: req.user._id } },
         {
           new: true,
           runValidators: true,
@@ -38,7 +38,7 @@ export const createMovie = async (req, res, next) => {
 
     const updatedMovie = await Movie.findByIdAndUpdate(
       newMovie._id,
-      { $addToSet: { owner: req.user._id } },
+      { $addToSet: { inFavorites: req.user._id } },
       {
         new: true,
         runValidators: true,
@@ -61,7 +61,7 @@ export const deleteSavedMovie = async (req, res, next) => {
   try {
     const updatedMovie = await Movie.findOneAndUpdate(
       { movieId: req.params.movieId },
-      { $pull: { owner: req.user._id } },
+      { $pull: { inFavorites: req.user._id } },
       {
         new: true,
         runValidators: true,
