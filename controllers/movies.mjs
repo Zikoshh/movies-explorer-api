@@ -7,7 +7,7 @@ export const getMovies = async (req, res, next) => {
   try {
     const movies = await Movie.find(
       { owner: req.user._id },
-      'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+      'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
     );
     return res.send(movies);
   } catch (error) {
@@ -27,7 +27,7 @@ export const createMovie = async (req, res, next) => {
           new: true,
           runValidators: true,
           select:
-            'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+            'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
         },
       );
 
@@ -43,7 +43,7 @@ export const createMovie = async (req, res, next) => {
         new: true,
         runValidators: true,
         select:
-          'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+          'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
       },
     );
 
@@ -66,7 +66,7 @@ export const deleteSavedMovie = async (req, res, next) => {
         new: true,
         runValidators: true,
         select:
-          'country director duration year description image trailer thumbnail owner movieId nameRU nameEN',
+          'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
       },
     ).orFail(() => next(new NotFoundError('Фильма с таким id не существует')));
 

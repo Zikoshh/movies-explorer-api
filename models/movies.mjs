@@ -47,7 +47,7 @@ const movieSchema = new Schema(
         message: (props) => `${props.value} неверный формат ссылки`,
       },
     },
-    owner: [
+    inFavorites: [
       {
         type: ObjectId,
         ref: 'user',
