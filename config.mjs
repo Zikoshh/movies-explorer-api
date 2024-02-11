@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit';
 import { celebrate, Joi } from 'celebrate';
 
 export const corsConfig = {
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:3000'],
   credentials: true,
 };
 
