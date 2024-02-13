@@ -28,13 +28,11 @@ const URL_REGEX =
 export const validationConfig = {
   createMovieValidation: celebrate({
     body: Joi.object().keys({
-      country: Joi.string().required(),
-      director: Joi.string().required(),
       duration: Joi.number().required(),
-      year: Joi.string().required(),
-      description: Joi.string().required(),
-      trailer: Joi.string().required().regex(URL_REGEX),
-      preview: Joi.string().required().regex(URL_REGEX),
+      trailerLink: Joi.string().required().regex(URL_REGEX),
+      image: Joi.object().keys({
+        url: Joi.string().required(),
+      }),
       movieId: Joi.number().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
