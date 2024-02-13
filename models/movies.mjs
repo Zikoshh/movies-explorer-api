@@ -19,10 +19,6 @@ const movieSchema = new Schema(
       url: {
         type: String,
         required: true,
-        validate: {
-          validator: validator.isURL,
-          message: (props) => `${props.value} неверный формат ссылки`,
-        },
       },
     },
     inFavorites: [
