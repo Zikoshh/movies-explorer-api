@@ -33,7 +33,7 @@ export const validationConfig = {
       image: Joi.object().keys({
         url: Joi.string().required(),
       }),
-      movieId: Joi.number().required(),
+      id: Joi.number().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
     }),

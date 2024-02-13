@@ -32,7 +32,7 @@ const movieSchema = new Schema(
         default: [],
       },
     ],
-    movieId: {
+    id: {
       type: Number,
       required: true,
     },
