@@ -31,7 +31,9 @@ export const updateInfo = async (req, res, next) => {
     return res.send(newUserInfo);
   } catch (error) {
     if (error.code === MONGODB_DUPLICATE_ERROR) {
-      return next(new DuplicateError('Пользователь с таким email уже существует.'));
+      return next(
+        new DuplicateError('Пользователь с таким email уже существует.'),
+      );
     }
 
     if (error instanceof mongoose.Error.ValidationError) {
@@ -56,7 +58,9 @@ export const createUser = async (req, res, next) => {
       .send({ _id: newUser._id, name: newUser.name, email: newUser.email });
   } catch (error) {
     if (error.code === MONGODB_DUPLICATE_ERROR) {
-      return next(new DuplicateError('Пользователь с таким email уже существует.'));
+      return next(
+        new DuplicateError('Пользователь с таким email уже существует.'),
+      );
     }
 
     if (error instanceof mongoose.Error.ValidationError) {
@@ -76,7 +80,9 @@ export const login = async (req, res, next) => {
     const matched = await bcrypt.compare(req.body.password, userInfo.password);
 
     if (!matched) {
-      return next(new UnAuthorizedError('Вы ввели неправильный логин или пароль.'));
+      return next(
+        new UnAuthorizedError('Вы ввели неправильный логин или пароль.'),
+      );
     }
 
     const token = generateJwt({ _id: userInfo._id });
