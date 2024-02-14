@@ -16,11 +16,11 @@ export const getMovies = async (req, res, next) => {
 
 export const createMovie = async (req, res, next) => {
   try {
-    const dbHasMovie = await Movie.findOne({ id: req.body.movieId });
+    const dbHasMovie = await Movie.findOne({ id: req.body.id });
 
     if (dbHasMovie) {
       const updatedMovie = await Movie.findOneAndUpdate(
-        { id: req.body.movieId },
+        { id: req.body.id },
         { $addToSet: { inFavorites: req.user._id } },
         {
           new: true,
