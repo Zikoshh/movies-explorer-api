@@ -53,6 +53,15 @@ export const createUser = async (req, res, next) => {
       password: hash,
     });
 
+    const token = generateJwt({ _id: newUser._id });
+
+    res.cookie('jwt', token, {
+      maxAge: 3600000 * 24 * 30,
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+    });
+
     return res
       .status(HTTP_CODES.CREATED_SUCCES)
       .send({ _id: newUser._id, name: newUser.name, email: newUser.email });
@@ -94,7 +103,7 @@ export const login = async (req, res, next) => {
       secure: true,
     });
 
-    res.send({ userId: userInfo._id });
+    res.send({ _id: userInfo._id, name: userInfo.name, email: userInfo.email });
   } catch (error) {
     return next(error);
   }
