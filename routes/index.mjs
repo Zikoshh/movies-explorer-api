@@ -15,7 +15,7 @@ routes.post('/signin', loginValidation, login);
 routes.use(auth);
 
 routes.delete('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
+  res.clearCookie('jwt', { sameSite: 'none' }).send({ message: 'Выход' });
 });
 routes.use('/users', usersRouter);
 routes.use('/movies', moviesRouter);
