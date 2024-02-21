@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit';
 import { celebrate, Joi } from 'celebrate';
 
 export const corsConfig = {
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000', 'https://zikoshh.nomoredomainswork.ru'],
   credentials: true,
 };
 
