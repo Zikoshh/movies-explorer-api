@@ -1,5 +1,9 @@
-Адрес репозитория - https://github.com/Zikoshh/movies-explorer-api
+Frontend pull request - https://github.com/Zikoshh/movies-explorer-frontend/pull/28
 
-IP - 51.250.98.167
+Backend pull request - https://github.com/Zikoshh/movies-explorer-api/pull/10
 
-Домен - https://api.zikoshh.nomoredomainsmonster.ru/
+Frontend - https://zikoshh.nomoredomainswork.ru
+
+Backend - https://api.zikoshh.nomoredomainsmonster.ru
+
+Стиль макета - dark-2
