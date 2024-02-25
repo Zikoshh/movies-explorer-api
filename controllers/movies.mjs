@@ -7,7 +7,6 @@ export const getMovies = async (req, res, next) => {
   try {
     const movies = await Movie.find(
       { inFavorites: req.user._id },
-      'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
     );
     return res.send(movies);
   } catch (error) {
@@ -17,17 +16,15 @@ export const getMovies = async (req, res, next) => {
 
 export const createMovie = async (req, res, next) => {
   try {
-    const dbHasMovie = await Movie.findOne({ movieId: req.body.movieId });
+    const dbHasMovie = await Movie.findOne({ id: req.body.id });
 
     if (dbHasMovie) {
       const updatedMovie = await Movie.findOneAndUpdate(
-        { movieId: req.body.movieId },
+        { id: req.body.id },
         { $addToSet: { inFavorites: req.user._id } },
         {
           new: true,
           runValidators: true,
-          select:
-            'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
         },
       );
 
@@ -42,8 +39,6 @@ export const createMovie = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-        select:
-          'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
       },
     );
 
@@ -60,13 +55,11 @@ export const createMovie = async (req, res, next) => {
 export const deleteSavedMovie = async (req, res, next) => {
   try {
     const updatedMovie = await Movie.findOneAndUpdate(
-      { movieId: req.params.movieId },
+      { id: req.params.movieId },
       { $pull: { inFavorites: req.user._id } },
       {
         new: true,
         runValidators: true,
-        select:
-          'country director duration year description image trailer thumbnail inFavorites movieId nameRU nameEN',
       },
     ).orFail(() => next(new NotFoundError('Фильма с таким id не существует')));
 

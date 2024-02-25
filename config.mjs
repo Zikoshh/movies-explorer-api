@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit';
 import { celebrate, Joi } from 'celebrate';
 
 export const corsConfig = {
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:3000', 'https://zikoshh.nomoredomainswork.ru'],
   credentials: true,
 };
 
@@ -28,15 +28,12 @@ const URL_REGEX =
 export const validationConfig = {
   createMovieValidation: celebrate({
     body: Joi.object().keys({
-      country: Joi.string().required(),
-      director: Joi.string().required(),
       duration: Joi.number().required(),
-      year: Joi.string().required(),
-      description: Joi.string().required(),
-      image: Joi.string().required().regex(URL_REGEX),
-      trailer: Joi.string().required().regex(URL_REGEX),
-      thumbnail: Joi.string().required().regex(URL_REGEX),
-      movieId: Joi.number().required(),
+      trailerLink: Joi.string().required().regex(URL_REGEX),
+      image: Joi.object().keys({
+        url: Joi.string().required(),
+      }),
+      id: Joi.number().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
     }),
