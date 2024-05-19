@@ -1,11 +1,18 @@
-Frontend pull request - https://github.com/Zikoshh/movies-explorer-frontend/pull/28
+# Movies explorer
 
-Backend pull request - https://github.com/Zikoshh/movies-explorer-api/pull/10
+## Описание проекта
 
-Frontend - https://zikoshh.nomoredomainswork.ru
+Сайт дает возможность добавлять фильмы в избранное/удалять, фильтрировать по короткометражкам. А также регистрироваться иизменять данные о пользователе.
 
-Backend - https://api.zikoshh.nomoredomainsmonster.ru
+## Используемые технологии
 
-Макет - https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=891-3857&mode=design&t=2o1n0jVrlmCiWxAF-0
+- Express
+- MongoDB
 
-Стиль макета - dark-2
+## Инструкции по установке и запуску
+
+1. Клонируйте репозиторий: `git clone https://github.com/Zikoshh/movies-explorer-api.git`
+2. Перейдите в директорию проекта: `cd movies-explorer-api`
+3. Установите зависимости: `npm i`
+4. Запустите проект: `npm run dev`
+5. В браузере открываем `http://localhost:3000/`
